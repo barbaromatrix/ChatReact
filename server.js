@@ -7,7 +7,8 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('new connection', socket.id);
+  socket.broadcast.emit('msg', 'New connection: ' + socket.id);
+
   socket.on('msg', (message) => {
     console.log(message);
     socket.broadcast.emit('msg', socket.id + ' says: ' + message);
