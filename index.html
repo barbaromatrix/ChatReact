@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Testing socket.io</title>
+</head>
+<body>
+  <div id="messages"></div>
+
+  <input type="text" id="messageField" />
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+    crossorigin="anonymous"></script>
+  <script>
+    const socket = io();
+    socket.on('connect', function(){
+      $("#messages").append('Connected with id: ' + socket.id + '<br>');
+    });
+
+    socket.on('msg', function(message){
+      $("#messages").append(message);
+    });
+
+    $(document).ready(function(){
+      $("#messageField").keydown(function(key){
+        if (key.keyCode === 13) {
+          socket.emit('msg', $(this).val() + '<br>');
+          $(this).val('');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
