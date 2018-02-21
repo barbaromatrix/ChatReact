@@ -25,7 +25,8 @@
 
     $(document).ready(function(){
       $("#messageField").keydown(function(key){
-        if (key.keyCode === 13) {
+        if (key.keyCode === 13 && $(this).val()) {
+          $("#messages").append("You said: " + $(this).val() + '<br>');
           socket.emit('msg', $(this).val() + '<br>');
           $(this).val('');
         }

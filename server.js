@@ -10,7 +10,6 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('msg', 'New connection: ' + socket.id);
 
   socket.on('msg', (message) => {
-    console.log(message);
     socket.broadcast.emit('msg', socket.id + ' says: ' + message);
   })
 });
